@@ -1,0 +1,39 @@
+# 500-2000 MeV proton beam into muon target. Tracking pions and muons produced as well as transmitted protons
+
+# The "default" physics list is QGSP_BERT
+physics QGSP_BERT
+
+# the beam is 500-2000 MeV kinetic energy, the mass of a proton is 938.272 MeV/c^2
+# Momentum calculated from SR and has units of MeV/c
+param M=938.272 KE=2000.0
+param P=sqrt(($M+$KE)*($M+$KE)-$M*$M)
+
+beam gaussian beamZ=-50 meanMomentum=$P sigmaX=9.98 sigmaY=9.98 nEvents=1000000 particle=proton
+trackcuts keep=proton,neutron,mu+,mu-,pi+,pi-
+
+# Muon target
+box target height=50 width=50 length=17.6777 material=GRAPHITE color=1,0,0
+place target z=0 rotation=X45
+
+# Cube of particle detectors
+
+virtualdetector proton_det height=50 width=50 length=0.1 color=0,0,0.5 format=asciiExtended
+place proton_det z=28
+
+virtualdetector face1 height=500 width=500 length=0.1 color=0,1,0 format=asciiExtended
+place face1 z=250
+
+virtualdetector face2 height=500 width=500 length=0.1 color=0,0,1 format=asciiExtended
+place face2 z=-250
+
+virtualdetector face3 height=0.1 width=500 length=500 color=1,1,0 format=asciiExtended
+place face3 z=0 y=250
+
+virtualdetector face4 height=0.1 width=500 length=500 color=1,0,1 format=asciiExtended
+place face4 z=0 y=-250
+
+virtualdetector face5 height=500 width=0.1 length=500 color=0,1,1 format=asciiExtended
+place face5 z=0 x=250
+
+virtualdetector face6 height=500 width=0.1 length=500 color=1,1,0.5 format=asciiExtended
+place face6 z=0 x=-250
